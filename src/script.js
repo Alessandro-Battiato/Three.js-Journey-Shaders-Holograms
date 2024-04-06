@@ -79,7 +79,7 @@ gui
 /**
  * Material
  */
-const material = new THREE.MeshBasicMaterial({
+const material = new THREE.ShaderMaterial({
     vertexShader: holographicVertexShader,
     fragmentShader: holographicFragmentShader
 })
