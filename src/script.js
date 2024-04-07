@@ -87,7 +87,8 @@ const material = new THREE.ShaderMaterial({
         uTime: new THREE.Uniform(0)
     },
     side: THREE.DoubleSide,
-    depthWrite: false
+    depthWrite: false,
+    blending: THREE.AdditiveBlending
 })
 
 /**
