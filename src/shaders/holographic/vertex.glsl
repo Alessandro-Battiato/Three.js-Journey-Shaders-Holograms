@@ -1,3 +1,5 @@
+uniform float uTime;
+
 varying vec3 vPosition;
 varying vec3 vNormal;
 
@@ -11,7 +13,8 @@ void main() {
     vec4 modelPosition = modelMatrix * vec4(position, 1.0); 
 
     // Glitch effect
-    modelPosition.x += random2D(modelPosition.xz + uTime);
+    modelPosition.x += random2D(modelPosition.xz + uTime) - 0.5; // fixes initial position that was been offset by random2D
+    modelPosition.z += random2D(modelPosition.zx + uTime) - 0.5; // fixes initial position that was been offset by random2D
 
     // Final position
     gl_Position = projectionMatrix * viewMatrix * modelPosition;
