@@ -85,7 +85,8 @@ const material = new THREE.ShaderMaterial({
     transparent: true, // warn THREE.js that you want to play with the alpha value of gl_FragColor inside fragment.glsl
     uniforms: {
         uTime: new THREE.Uniform(0)
-    }
+    },
+    side: THREE.DoubleSide
 })
 
 /**
