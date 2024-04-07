@@ -13,8 +13,13 @@ void main() {
     vec4 modelPosition = modelMatrix * vec4(position, 1.0); 
 
     // Glitch effect
-    modelPosition.x += random2D(modelPosition.xz + uTime) - 0.5; // fixes initial position that was been offset by random2D
-    modelPosition.z += random2D(modelPosition.zx + uTime) - 0.5; // fixes initial position that was been offset by random2D
+    float glitchTime = uTime - modelPosition.y;
+    float glitchStrength = sin(glitchTime) + sin(glitchTime * 3.45) + sin(glitchTime * 8.76); // this adds randomness as to when to display the glitch effect
+    glitchStrength /= 3.0; // because of the sin applied before, it could go from -3 to +3, so this fixes the value so it can go only from -1 to +1, because of how the sin works
+    glitchStrength = smoothstep(0.3, 1.0, glitchStrength); // if it goes above 0.3 then it's 1, if not, it's 0
+    glitchStrength *= 0.25;
+    modelPosition.x += (random2D(modelPosition.xz + uTime) - 0.5) * glitchStrength; // fixes initial position that was been offset by random2D
+    modelPosition.z += (random2D(modelPosition.zx + uTime) - 0.5) * glitchStrength; // fixes initial position that was been offset by random2D
 
     // Final position
     gl_Position = projectionMatrix * viewMatrix * modelPosition;
