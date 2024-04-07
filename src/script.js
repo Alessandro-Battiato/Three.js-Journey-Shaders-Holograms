@@ -79,12 +79,22 @@ gui
 /**
  * Material
  */
+const materialParemeters = {}
+materialParemeters.color = '#70c1ff'
+
+gui
+    .addColor(materialParemeters, 'color')
+    .onChange(() => {
+        material.uniforms.uColor.value.set(materialParemeters.color); // this enables the tweaks to the color to have effect
+    })
+
 const material = new THREE.ShaderMaterial({
     vertexShader: holographicVertexShader,
     fragmentShader: holographicFragmentShader,
     transparent: true, // warn THREE.js that you want to play with the alpha value of gl_FragColor inside fragment.glsl
     uniforms: {
-        uTime: new THREE.Uniform(0)
+        uTime: new THREE.Uniform(0),
+        uColor: new THREE.Uniform(new THREE.Color(materialParemeters.color))
     },
     side: THREE.DoubleSide,
     depthWrite: false,
