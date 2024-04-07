@@ -20,9 +20,13 @@ void main() {
     float fresnel = dot(viewDirection, normal) + 1.0;// Dot product (if Vectors are the same direction, we get 1, if they're perpendicular we get 0, if they're opposite we get -1, and if they're like in between of being perpendicular, we get 0.5) and finally the + 1.0 is needed in order to fix the range of the values from 0 to 1
     fresnel = pow(fresnel, 2.0); // pushes the gradient outward
 
+    // Falloff
+    float falloff = smoothstep(0.8, 0.0, fresnel);
+
     // Holographic
     float holographic = stripes * fresnel;
     holographic += fresnel * 1.25; // this makes the models more visible on the surface
+    holographic *= falloff;
 
     // Final color
     gl_FragColor = vec4(1.0, 1.0, 1.0, holographic); // stripes used as alpha value turns models transparent
