@@ -6,6 +6,10 @@ varying vec3 vNormal;
 void main() {
     // Normal
     vec3 normal = normalize(vNormal); // Fix the grid pattern by normalizing normal value, which had the correct direction but the wrong value (it was lower than 1)
+    // WebGL provides us with a boolean telling us when we are facing the front of the vertex, so we use the ! in order to invert the normal when we are on the back
+    if (!gl_FrontFacing) {
+        normal *= - 1.0; // the normals go upwards by default as direction, so when we are on the back of the hologram model, we need to invert it's direction and we do it like so
+    }
 
     // Stripes
     float stripes = mod((vPosition.y - uTime * 0.02) * 20.0, 1.0);
